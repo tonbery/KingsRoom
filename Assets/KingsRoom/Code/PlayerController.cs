@@ -24,10 +24,13 @@ public class PlayerController : MonoBehaviour
 
     private CharacterController _characterController;
 
-    
+    public Camera MainCamera => mainCamera;
+
 
     void Start()
     {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
         _characterController = GetComponent<CharacterController>();
     }
 

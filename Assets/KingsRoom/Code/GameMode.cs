@@ -5,6 +5,10 @@ using UnityEngine;
 
 public class GameMode : MonoBehaviour
 {
+    static GameMode _gameMode;
+    public static GameMode Instance => _gameMode;
+    public PlayerController PlayerController => _playerController;
+    
 
     [SerializeField] private NPCController[] NPCPrefabs;
     
@@ -19,6 +23,13 @@ public class GameMode : MonoBehaviour
     private ListShuffleBag<Transform> _endPointsBag;
     private ListShuffleBag<Transform> _exitPointsBag;
 
+    private PlayerController _playerController;
+    private void Awake()
+    {
+        _gameMode = this;
+        _playerController = FindObjectOfType<PlayerController>();
+    }
+
     private void Start()
     {
         _activeNPCs = new List<NPCController>();
@@ -28,7 +39,7 @@ public class GameMode : MonoBehaviour
         _endPointsBag = new ListShuffleBag<Transform>(NPCEndPoints);
         _exitPointsBag = new ListShuffleBag<Transform>(NPCExitPoints);
         
-        SpawnNPC();
+        Invoke(nameof(SpawnNPC), 1);
     }
 
     void SpawnNPC()
