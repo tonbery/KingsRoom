@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
+using UnityEngine.UI;
 using Input = UnityEngine.Input;
 
 public class PlayerController : MonoBehaviour
@@ -26,6 +27,8 @@ public class PlayerController : MonoBehaviour
 
     public Camera MainCamera => mainCamera;
 
+    [SerializeField] private LayerMask buttonsLayerMask;
+
 
     void Start()
     {
@@ -36,6 +39,16 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+        else if (Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
         _inputMove.x = Input.GetAxis("Horizontal");
         _inputMove.z = Input.GetAxis("Vertical");
         
@@ -47,7 +60,20 @@ public class PlayerController : MonoBehaviour
         _cameraRotation.x = Mathf.Clamp(_cameraRotation.x, -50, 50);
 
         transform.eulerAngles = _characterRotation;
-        mainCamera.transform.localEulerAngles = _cameraRotation;
+        var cameraTransform = mainCamera.transform;
+        
+        cameraTransform.localEulerAngles = _cameraRotation;
+
+        RaycastHit hit;
+        Ray ray = new Ray(cameraTransform.position, cameraTransform.forward);
+
+        if (Physics.Raycast(ray, out hit, 100, buttonsLayerMask))
+        {
+            if (Input.GetKeyDown(KeyCode.Mouse0))
+            {
+                hit.collider.GetComponent<UIButtonCollider>().Press();
+            }
+        }
     }
     
     void FixedUpdate()

@@ -29,7 +29,7 @@ public class InputModule : StandaloneInputModule
         return false;
     }*/
 
-    /*protected override MouseState GetMousePointerEventData()
+    protected override MouseState GetMousePointerEventData(int id) 
     {
         var created = GetPointerData( kMouseLeftId, out var leftData, true );
  
@@ -60,9 +60,9 @@ public class InputModule : StandaloneInputModule
         _mouseState.SetButtonState(PointerEventData.InputButton.Middle, StateForMouseButton(2), middleData);
  
         return _mouseState;
-    }*/
+    }
     
-    protected override MouseState GetMousePointerEventData(int id) {
+    /*protected override MouseState GetMousePointerEventData(int id) {
         var lockState = Cursor.lockState;
         var visibleState = Cursor.visible;
         Cursor.lockState = CursorLockMode.None;
@@ -70,7 +70,7 @@ public class InputModule : StandaloneInputModule
         Cursor.lockState = lockState;
         Cursor.visible = visibleState;
         return mouseState;
-    }
+    }*/
  
     protected override void ProcessMove(PointerEventData pointerEvent) {
         var lockState = Cursor.lockState;

@@ -76,6 +76,9 @@ MonoBehaviour:
   gravity: 10
   lookSpeed: 200
   walkSpeed: 7
+  buttonsLayerMask:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!1 &8563758059772609303
 GameObject:
   m_ObjectHideFlags: 0

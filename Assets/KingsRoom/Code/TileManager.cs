@@ -4,10 +4,7 @@ using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 
-enum EDirection
-{
-    North, East, West, South
-}
+
 public class TileManager : MonoBehaviour
 {
     private List<TileData> _tiles;
@@ -23,7 +20,7 @@ public class TileManager : MonoBehaviour
     {
         _tiles = new List<TileData>();
         
-        var halfSize = (gridSize / 2) * tileSize;
+        /*var halfSize = (gridSize / 2) * tileSize;
         Vector3 tilePosition = new Vector3(-halfSize, 0, -halfSize);
         
         for (int i = 0; i < gridSize; i++)
@@ -44,6 +41,6 @@ public class TileManager : MonoBehaviour
             }
 
             tilePosition.x += tileSize;
-        }
+        }*/
     }
 }

@@ -176,8 +176,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6314a2de7b599e845b8909975c2c6b4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _agent: {fileID: 3265519405397519328}
+  myData: {fileID: 0}
   UICanvas: {fileID: 583737980216783737}
+  _agent: {fileID: 3265519405397519328}
+  OnAccepted:
+    m_PersistentCalls:
+      m_Calls: []
+  OnExit:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &937960978973853310
 PrefabInstance:
   m_ObjectHideFlags: 0

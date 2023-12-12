@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0951f009e614aeb49aa3f5563dd24d8c, type: 3}
+  m_Name: Wall
+  m_EditorClassIdentifier: 
+  buildingType: 3
+  buildingPrefab:
+  - {fileID: 2193234756955246490, guid: 068482dd7011c7f449add5a55f3fdb96, type: 3}
+  buildingCost:
+  - ResourceType: 1
+    Value: 10
+  dailyCost: []
+  buildingReward:
+  - ResourceType: 0
+    Value: 1
+  - ResourceType: 2
+    Value: 1
+  - ResourceType: 1
+    Value: 1
+  dailyReward: []
