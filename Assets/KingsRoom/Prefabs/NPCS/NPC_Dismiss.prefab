@@ -86,7 +86,7 @@ PrefabInstance:
     - target: {fileID: 9139365097080194749, guid: 8dba2466595407740b959f956a00ff70,
         type: 3}
       propertyPath: m_Name
-      value: NPC_Sleep Variant
+      value: NPC_Dismiss
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 2745074279563694298, guid: 8dba2466595407740b959f956a00ff70, type: 3}
@@ -97,7 +97,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 9139365097080194749, guid: 8dba2466595407740b959f956a00ff70,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 855620945580947768}
+      addedObject: {fileID: 4738810400263570213}
   m_SourcePrefab: {fileID: 100100000, guid: 8dba2466595407740b959f956a00ff70, type: 3}
 --- !u!223 &2886666262385123302 stripped
 Canvas:
@@ -111,7 +111,7 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 2312217094112439455}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &855620945580947768
+--- !u!114 &4738810400263570213
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -120,7 +120,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6828346610569308706}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25d41aa9301841d40bb51df5e9a35d8b, type: 3}
+  m_Script: {fileID: 11500000, guid: 8fca0521317d70d488d73241d7c9e5ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   UICanvas: {fileID: 2886666262385123302}

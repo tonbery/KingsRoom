@@ -50,13 +50,16 @@ public class GameMode : MonoBehaviour
     [SerializeField] private int dayPhases;
     [SerializeField] private Vector3[] phaseSunRotation;
     [SerializeField] private Light sunRef; 
-    private int _currentDayPhase;
+    private int _currentDayPhase = -1;
 
     private Dictionary<EResourceType, int> Resources = new Dictionary<EResourceType, int>();
 
     private List<TileData> _tiles;
 
     private List<NPCRequesterController> _activeNPCs;
+    [SerializeField] private NPCDismissController _dismissNPC;
+    [SerializeField] private NPCSleepController _sleepNPC;
+    
 
     private ListShuffleBag<NPCData> _NPCBag;
     private ListShuffleBag<Transform> _spawnPointsBag;
@@ -67,6 +70,10 @@ public class GameMode : MonoBehaviour
     private Dictionary<EBuildingType, BuildingData> _buildingDataByType = new Dictionary<EBuildingType, BuildingData>();
 
     private PlayerController _playerController;
+
+    private bool _phaseUnlocked = false;
+
+    
     private void Awake()
     {
         _gameMode = this;
@@ -93,26 +100,57 @@ public class GameMode : MonoBehaviour
         Resources[EResourceType.Gold] = 10;
 
         TriggerNewPhase();
+        _sleepNPC.SetUIVisibilityState(false);
     }
 
     public void Sleep()
     {
-        Debug.Log("SLEEP!");
+        if (_currentDayPhase >= dayPhases-1 && _phaseUnlocked)
+        {
+            Debug.Log("SLEEP");
+            _sleepNPC.SetUIVisibilityState(false);
+            _currentDayPhase = -1;
+            TriggerNewPhase();
+            
+            Debug.LogError("tem q construir, calcular os recursos, etc");
+        }
     }
 
     void TriggerNewPhase()
     {
-        StartCoroutine(StartPhaseRoutine());
+        if (_currentDayPhase < dayPhases-1)
+        {
+            StartCoroutine(StartPhaseRoutine());
+        }
+        else
+        {
+            
+            StartCoroutine(LastPhaseRoutine());
+        }
     }
 
     private int NPCInterval = 1;
     private int sunTransitionTime = 5;
 
+    IEnumerator LastPhaseRoutine()
+    {
+        LockPhase();
+        
+        sunRef.transform.DORotate(phaseSunRotation[_currentDayPhase+1], sunTransitionTime);
+        EndPhase();
+        yield return new WaitForSeconds(3);
+        _sleepNPC.SetUIVisibilityState(true);
+        
+        UnlockPhase();
+        
+        _dismissNPC.SetUIVisibilityState(false);
+    }
+
     IEnumerator StartPhaseRoutine()
     {
-        sunRef.transform.DORotate(phaseSunRotation[_currentDayPhase], sunTransitionTime);
-
-        yield return new WaitForSeconds(sunTransitionTime);
+        LockPhase();
+        
+        _currentDayPhase++;
         
         if (_activeNPCs.Count > 0)
         {
@@ -120,11 +158,17 @@ public class GameMode : MonoBehaviour
             yield return new WaitForSeconds((NPCInterval * 3) + 3);
         }
         
+        sunRef.transform.DORotate(phaseSunRotation[_currentDayPhase], sunTransitionTime);
+
+        yield return new WaitForSeconds(sunTransitionTime);
+
         for (int i = 0; i < 3; i++)
         {
             SpawnNPC();
             yield return new WaitForSeconds(NPCInterval);
         }
+        
+        UnlockPhase();
     }
 
     void EndPhase()
@@ -209,8 +253,14 @@ public class GameMode : MonoBehaviour
         
         TileData newTile = new TileData();
         newTile.Position = vDir;
-        newTile.Object = Instantiate(ListUtils<GameObject>.GetRandomElement(data.BuildingPrefab), vDir, Quaternion.identity);  
-        
+        newTile.Object = Instantiate(ListUtils<GameObject>.GetRandomElement(data.BuildingPrefab), vDir, Quaternion.identity);
+
+        foreach (var NPC in _activeNPCs)
+        {
+            NPC.RemoveUI();
+        }
+
+        TriggerNewPhase();
         
         Debug.LogError("aqui iniciar o lance de chamar proxima etapa do dia");
     }
@@ -263,9 +313,47 @@ public class GameMode : MonoBehaviour
         GUILayout.EndVertical();
     }
 
+    void LockPhase()
+    {
+        _phaseUnlocked = false;
+        foreach (var NPC in _activeNPCs)
+        {
+            NPC.SetUIVisibilityState(false);
+        }
+        
+        _dismissNPC.SetUIVisibilityState(false);
+    }
+
+    void UnlockPhase()
+    {
+        _phaseUnlocked = true;
+        
+        foreach (var NPC in _activeNPCs)
+        {
+            NPC.SetUIVisibilityState(true);
+        }
+        
+        _dismissNPC.SetUIVisibilityState(true);
+    }
 
     public void Dismiss()
     {
-        
+        TriggerNewPhase();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.PageDown))
+        {
+            Time.timeScale *= 0.5f;
+        }
+        if (Input.GetKeyDown(KeyCode.PageUp))
+        {
+            Time.timeScale *= 2f;
+        }
+        if (Input.GetKeyDown(KeyCode.Home))
+        {
+            Time.timeScale = 1;
+        }
     }
 }

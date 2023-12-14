@@ -40,20 +40,15 @@ public class NPCRequesterController : NPCBaseController
     protected override void OnAcceptedButtonClicked()
     {
         GameMode.Instance.RequestConstruction(myData.BuildingType, _myChosenDirection);
-        Destroy(UICanvas.gameObject);
+        SetUIVisibilityRequest(false);
     }
 
     protected override void Update()
     {
         base.Update();
-        
-       if(_isExiting){
-        Debug.Log(transform.position.Distance(_currentDestination));
-       }
-        
+
         if (_isExiting && transform.position.IsClose(_currentDestination, 0.5f))
         {
-            Debug.Log("AAAAAA");
             Destroy(gameObject);
         }
     }
@@ -74,5 +69,10 @@ public class NPCRequesterController : NPCBaseController
         _endPoint = newEndPoint;
         _currentDestination = _endPoint.transform.position;
         SetDestinationPoint(_endPoint.transform);
+    }
+
+    public void RemoveUI()
+    {
+        if(_NPCCanvas) Destroy(_NPCCanvas);
     }
 }
