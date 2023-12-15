@@ -40,7 +40,7 @@ public class NPCRequesterController : NPCBaseController
     protected override void OnAcceptedButtonClicked()
     {
         GameMode.Instance.RequestConstruction(myData.BuildingType, _myChosenDirection);
-        SetUIVisibilityRequest(false);
+        SetUIVisibilityWish(false);
     }
 
     protected override void Update()
@@ -55,6 +55,7 @@ public class NPCRequesterController : NPCBaseController
 
     public void SetExitPoint(Transform destination)
     {
+        SetUIVisibilityWish(false);
         _isExiting = true;
         SetDestinationPoint(destination);
     }

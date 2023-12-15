@@ -33,6 +33,18 @@ struct NPCPoint
     }
 }
 
+struct BuildRequest
+{
+    public EBuildingType BuildingType;
+    public EDirection Direction;
+
+    public BuildRequest(EBuildingType newBuildingType, EDirection newDirection)
+    {
+        BuildingType = newBuildingType;
+        Direction = newDirection;
+    }
+}
+
 public class GameMode : MonoBehaviour
 {
     static GameMode _gameMode;
@@ -49,12 +61,15 @@ public class GameMode : MonoBehaviour
     [SerializeField] private Transform[] NPCExitPoints;
     [SerializeField] private int dayPhases;
     [SerializeField] private Vector3[] phaseSunRotation;
-    [SerializeField] private Light sunRef; 
+    [SerializeField] private Light sunRef;
+
+    private List<BuildRequest> _buildingOfTheDay = new List<BuildRequest>();
+        
     private int _currentDayPhase = -1;
 
     private Dictionary<EResourceType, int> Resources = new Dictionary<EResourceType, int>();
 
-    private List<TileData> _tiles;
+    private List<TileData> _tiles = new List<TileData>();
 
     private List<NPCRequesterController> _activeNPCs;
     [SerializeField] private NPCDismissController _dismissNPC;
@@ -94,11 +109,9 @@ public class GameMode : MonoBehaviour
 
         for (int i = 0; i < (int)EResourceType.NUM; i++)
         {
-            Resources.Add((EResourceType)i, 0);
+            Resources.Add((EResourceType)i, 10);
         }
-
-        Resources[EResourceType.Gold] = 10;
-
+        
         TriggerNewPhase();
         _sleepNPC.SetUIVisibilityState(false);
     }
@@ -107,12 +120,16 @@ public class GameMode : MonoBehaviour
     {
         if (_currentDayPhase >= dayPhases-1 && _phaseUnlocked)
         {
+            ProcessResources();
+            
+            Build();
+            
             Debug.Log("SLEEP");
             _sleepNPC.SetUIVisibilityState(false);
             _currentDayPhase = -1;
             TriggerNewPhase();
             
-            Debug.LogError("tem q construir, calcular os recursos, etc");
+            Debug.LogError("tem que calcular os recursos, etc");
         }
     }
 
@@ -208,27 +225,10 @@ public class GameMode : MonoBehaviour
         var newNPC = Instantiate(npcPick.Prefab, spawnPoint.position, spawnPoint.rotation);
         newNPC.SetNPCPosition(NPCEndPoints[foundIndex]);
         NPCEndPoints[foundIndex].SetOccupant(newNPC);
-        //newNPC.OnExit.AddListener(OnNPCExit);
 
         _activeNPCs.Add(newNPC);
-
-        /*foreach (var npcEndPoint in NPCEndPoints)
-        {
-            if (npcEndPoint.Occupant == null)
-            {
-                Invoke(nameof(SpawnNPC), 1);
-                break;
-            }
-        }*/
     }
-
-    /*private void OnNPCExit(NPCRequesterController npcRequester)
-    {
-        npcRequester.EndPoint.SetOccupant(null);
-        _activeNPCs.Remove(npcRequester);
-        Invoke(nameof(SpawnNPC), 1);
-    }*/
-
+    
     public void RequestConstruction(EBuildingType building, EDirection direction)
     {
         print("REQUEST");
@@ -241,19 +241,7 @@ public class GameMode : MonoBehaviour
 
         SpendBuildingResources(building);
         
-        var data = _buildingDataByType[building];
-
-        
-        var angle = (int)direction * 90;
-        angle += Random.Range(-45, 45);
-        
-        var vDir = Vector3.forward.Rotate(angle, Vector3.up).normalized;
-
-        vDir *= Random.Range(minRadius, maxRadius);
-        
-        TileData newTile = new TileData();
-        newTile.Position = vDir;
-        newTile.Object = Instantiate(ListUtils<GameObject>.GetRandomElement(data.BuildingPrefab), vDir, Quaternion.identity);
+        _buildingOfTheDay.Add(new BuildRequest(building, direction));
 
         foreach (var NPC in _activeNPCs)
         {
@@ -261,8 +249,50 @@ public class GameMode : MonoBehaviour
         }
 
         TriggerNewPhase();
+    }
+
+    void ProcessResources()
+    {
+        foreach (var tile in _tiles)
+        {
+            if (tile.BuildingData.DailyCost.Length == 0 || HaveResources(tile.BuildingData.DailyCost))
+            {
+                SpendResources(tile.BuildingData.DailyCost);
+                
+                foreach (var reward in tile.BuildingData.DailyReward)
+                {
+                    Resources[reward.ResourceType] += reward.Value;
+                }
+            }
+        }
+    }
+    
+    void Build()
+    {
+        foreach (var buildingRequest in _buildingOfTheDay)
+        {
+            var data = _buildingDataByType[buildingRequest.BuildingType];
+
+            var angle = (int)buildingRequest.Direction * 90;
+            angle += Random.Range(-45, 45);
         
-        Debug.LogError("aqui iniciar o lance de chamar proxima etapa do dia");
+            var vDir = Vector3.forward.Rotate(angle, Vector3.up).normalized;
+
+            vDir *= Random.Range(minRadius, maxRadius);
+        
+            TileData newTile = new TileData();
+            newTile.Position = vDir;
+            newTile.Object = Instantiate(ListUtils<GameObject>.GetRandomElement(data.BuildingPrefab), vDir, Quaternion.identity);
+            newTile.BuildingData = data; 
+            _tiles.Add(newTile);
+            
+            foreach (var reward in newTile.BuildingData.BuildingReward)
+            {
+                Resources[reward.ResourceType] +=  reward.Value;
+            }
+        }
+        
+        _buildingOfTheDay.Clear();
     }
 
     public Transform GetExitPoint()
@@ -285,9 +315,37 @@ public class GameMode : MonoBehaviour
         }
     }
     
+    public void SpendResources(ResourceCost[] costs)
+    {
+        foreach (var cost in costs)
+        {
+            Resources[cost.ResourceType] -= cost.Value;
+        }
+    }
+    
     public bool HaveResources(BuildingData building)
     {
         foreach (var cost in building.BuildingCost)
+        {
+            if (Resources[cost.ResourceType] < cost.Value) return false;
+        }
+
+        return true;
+    }
+    
+    public bool HaveResources(List<ResourceCost> costs)
+    {
+        foreach (var cost in costs)
+        {
+            if (Resources[cost.ResourceType] < cost.Value) return false;
+        }
+
+        return true;
+    }
+    
+    public bool HaveResources(ResourceCost[] costs)
+    {
+        foreach (var cost in costs)
         {
             if (Resources[cost.ResourceType] < cost.Value) return false;
         }

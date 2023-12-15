@@ -6,4 +6,5 @@ public struct TileData
 {
     public Vector3 Position;
     public GameObject Object;
+    public BuildingData BuildingData;
 }

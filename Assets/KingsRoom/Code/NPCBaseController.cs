@@ -11,8 +11,8 @@ public class NPCBaseController : MonoBehaviour
     protected NPCCanvas _NPCCanvas;
     //public UnityEvent<EBuildingType, EDirection> OnRequestConstruction = new UnityEvent<EBuildingType, EDirection>();
     private PlayerController _playerController;
-    private bool canShowUI;
-    private bool wantShowUI = true;
+    private bool _canShowUI;
+    private bool _wantShowUI = true;
     
     protected virtual void Start()
     {
@@ -40,19 +40,19 @@ public class NPCBaseController : MonoBehaviour
 
     public void SetUIVisibilityState(bool newState)
     {
-        canShowUI = newState;
+        _canShowUI = newState;
         UpdateUIState();
     }
 
-    public void SetUIVisibilityRequest(bool newShow)
+    public void SetUIVisibilityWish(bool newShow)
     {
-        wantShowUI = newShow;
+        _wantShowUI = newShow;
         UpdateUIState();
     }
 
     void UpdateUIState()
     {
-        if (canShowUI && wantShowUI)
+        if (_canShowUI && _wantShowUI)
         {
             ShowUI();
         }
