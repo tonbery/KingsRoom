@@ -33,7 +33,7 @@ struct NPCPoint
     }
 }
 
-struct BuildRequest
+public struct BuildRequest
 {
     public EBuildingType BuildingType;
     public EDirection Direction;
@@ -51,25 +51,21 @@ public class GameMode : MonoBehaviour
     public static GameMode Instance => _gameMode;
     public PlayerController PlayerController => _playerController;
 
-    [SerializeField] private float minRadius = 1;
-    [SerializeField] private float maxRadius = 1;
-    
     [SerializeField] private NPCData[] NPCDatas;
-    [SerializeField] private BuildingData[] buildingData;
+    
     [SerializeField] private Transform[] NPCSpawnPoints;
     [SerializeField] private NPCEndPoint[] NPCEndPoints;
     [SerializeField] private Transform[] NPCExitPoints;
     [SerializeField] private int dayPhases;
     [SerializeField] private Vector3[] phaseSunRotation;
     [SerializeField] private Light sunRef;
+    [SerializeField] private BuildingManager _buildingManager;
 
     private List<BuildRequest> _buildingOfTheDay = new List<BuildRequest>();
         
     private int _currentDayPhase = -1;
 
     private Dictionary<EResourceType, int> Resources = new Dictionary<EResourceType, int>();
-
-    private List<TileData> _tiles = new List<TileData>();
 
     private List<NPCRequesterController> _activeNPCs;
     [SerializeField] private NPCDismissController _dismissNPC;
@@ -82,7 +78,7 @@ public class GameMode : MonoBehaviour
     //private ListShuffleBag<Transform> _endPointsBag;
     private ListShuffleBag<Transform> _exitPointsBag;
 
-    private Dictionary<EBuildingType, BuildingData> _buildingDataByType = new Dictionary<EBuildingType, BuildingData>();
+    //private Dictionary<EBuildingType, BuildingData> _buildingDataByType = new Dictionary<EBuildingType, BuildingData>();
 
     private PlayerController _playerController;
 
@@ -93,10 +89,6 @@ public class GameMode : MonoBehaviour
     {
         _gameMode = this;
         _playerController = FindObjectOfType<PlayerController>();
-        foreach (var data in buildingData)
-        {
-            _buildingDataByType.Add(data.BuildingType, data);
-        }
     }
     
     private void Start()
@@ -253,7 +245,7 @@ public class GameMode : MonoBehaviour
 
     void ProcessResources()
     {
-        foreach (var tile in _tiles)
+        foreach (var tile in _buildingManager.Tiles)
         {
             if (tile.BuildingData.DailyCost.Length == 0 || HaveResources(tile.BuildingData.DailyCost))
             {
@@ -271,21 +263,8 @@ public class GameMode : MonoBehaviour
     {
         foreach (var buildingRequest in _buildingOfTheDay)
         {
-            var data = _buildingDataByType[buildingRequest.BuildingType];
+            var newTile = _buildingManager.Build(buildingRequest);
 
-            var angle = (int)buildingRequest.Direction * 90;
-            angle += Random.Range(-45, 45);
-        
-            var vDir = Vector3.forward.Rotate(angle, Vector3.up).normalized;
-
-            vDir *= Random.Range(minRadius, maxRadius);
-        
-            TileData newTile = new TileData();
-            newTile.Position = vDir;
-            newTile.Object = Instantiate(ListUtils<GameObject>.GetRandomElement(data.BuildingPrefab), vDir, Quaternion.identity);
-            newTile.BuildingData = data; 
-            _tiles.Add(newTile);
-            
             foreach (var reward in newTile.BuildingData.BuildingReward)
             {
                 Resources[reward.ResourceType] +=  reward.Value;
@@ -302,13 +281,13 @@ public class GameMode : MonoBehaviour
     
     public bool HaveResources(EBuildingType buildingType)
     {
-        var building = _buildingDataByType[buildingType];
+        var building = _buildingManager.GetBuildDataByType(buildingType);
         return HaveResources(building);
     }
     
     public void SpendBuildingResources(EBuildingType buildingType)
     {
-        var building = _buildingDataByType[buildingType];
+        var building = _buildingManager.GetBuildDataByType(buildingType);
         foreach (var cost in building.BuildingCost)
         {
             Resources[cost.ResourceType] -= cost.Value;

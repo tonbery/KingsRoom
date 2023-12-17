@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0951f009e614aeb49aa3f5563dd24d8c, type: 3}
   m_Name: Wall
   m_EditorClassIdentifier: 
-  buildingType: 3
+  buildingType: 6
   buildingPrefab:
   - {fileID: 2193234756955246490, guid: 068482dd7011c7f449add5a55f3fdb96, type: 3}
   buildingCost:
-  - ResourceType: 1
+  - ResourceType: 0
     Value: 10
   dailyCost: []
   buildingReward:

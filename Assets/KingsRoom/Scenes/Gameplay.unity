@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 268.07767, g: 207.92886, b: 135.46925, a: 1}
+  m_IndirectSpecularColor: {r: 270.22476, g: 208.97427, b: 135.99825, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2562,7 +2562,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1575515514}
   - component: {fileID: 1575515515}
-  - component: {fileID: 1575515513}
+  - component: {fileID: 1575515516}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -2570,24 +2570,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1575515513
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1575515512}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ebdb3aa8dfbacd46944c397d700abaa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tileTest: {fileID: 5250760985806110247, guid: 02d84692dd8c5564a90e0b41c1a18a54,
-    type: 3}
-  gridSize: 60
-  tileSize: 6.5
-  minRadius: 35
-  maxRadius: 120
 --- !u!4 &1575515514
 Transform:
   m_ObjectHideFlags: 0
@@ -2615,8 +2597,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdada27bd89d84d4cb8b6e11c710eb00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minRadius: 35
-  maxRadius: 120
   NPCDatas:
   - {fileID: 11400000, guid: 37e1eed23580e4f4db924903a5440a23, type: 2}
   - {fileID: 11400000, guid: 02de007007a9cd846af5cbea9875ad66, type: 2}
@@ -2624,13 +2604,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2e3ae770062bd8e468b5c50f9092aad8, type: 2}
   - {fileID: 11400000, guid: c343be075303ca44abcef0003b0954a1, type: 2}
   - {fileID: 11400000, guid: e0c54174ad57c394496a2eedd74d9c52, type: 2}
-  buildingData:
-  - {fileID: 11400000, guid: 04d16c392f462434a9ccc152b2d325dc, type: 2}
-  - {fileID: 11400000, guid: 2828fc6b0c0c17649b817f76045b282d, type: 2}
-  - {fileID: 11400000, guid: ba59599f2b46f42488c9e764a802c99f, type: 2}
-  - {fileID: 11400000, guid: da54e44c5632a3e4baff21027f189548, type: 2}
-  - {fileID: 11400000, guid: e75e1742d26cc374e9bd70b150a2b69b, type: 2}
-  - {fileID: 11400000, guid: b121272159009334ca8b82177424c38f, type: 2}
   NPCSpawnPoints:
   - {fileID: 692525366}
   - {fileID: 529568258}
@@ -2648,8 +2621,31 @@ MonoBehaviour:
   - {x: 172.406, y: 0, z: 0}
   - {x: 286.564, y: 0, z: 0}
   sunRef: {fileID: 157207113}
+  _buildingManager: {fileID: 1575515516}
   _dismissNPC: {fileID: 907351376}
   _sleepNPC: {fileID: 1224812069}
+--- !u!114 &1575515516
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1575515512}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d663c95fdafc57e40971468d916f462d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minRadius: 40
+  maxRadius: 120
+  buildingData:
+  - {fileID: 11400000, guid: 04d16c392f462434a9ccc152b2d325dc, type: 2}
+  - {fileID: 11400000, guid: 2828fc6b0c0c17649b817f76045b282d, type: 2}
+  - {fileID: 11400000, guid: ba59599f2b46f42488c9e764a802c99f, type: 2}
+  - {fileID: 11400000, guid: da54e44c5632a3e4baff21027f189548, type: 2}
+  - {fileID: 11400000, guid: e75e1742d26cc374e9bd70b150a2b69b, type: 2}
+  - {fileID: 11400000, guid: b121272159009334ca8b82177424c38f, type: 2}
+  - {fileID: 11400000, guid: e24032d09ef403e4ab91b94b7f66069a, type: 2}
 --- !u!114 &1694666564 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1496779664361108559, guid: 37de2b23263f15f448db0ff82ef38b49,
