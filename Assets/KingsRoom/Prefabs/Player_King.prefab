@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7153472919950974097}
   - component: {fileID: 3166288758840290027}
   - component: {fileID: 7207354184655571764}
+  - component: {fileID: 4721573589681885293}
   m_Layer: 3
   m_Name: Player_King
   m_TagString: Untagged
@@ -79,6 +80,23 @@ MonoBehaviour:
   buttonsLayerMask:
     serializedVersion: 2
     m_Bits: 64
+--- !u!114 &4721573589681885293
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8255418019677164760}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4508f0f881de74e40b170c83d240841f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactionDistance: 5
+  interactiveMask:
+    serializedVersion: 2
+    m_Bits: 512
+  playerController: {fileID: 7207354184655571764}
 --- !u!1 &8563758059772609303
 GameObject:
   m_ObjectHideFlags: 0

@@ -7,7 +7,12 @@ public static class VectorUtils
     public static Vector3 Rotate(this Vector3 vector, float angle, Vector3 axis)
     {
         return Quaternion.AngleAxis(angle, axis) * vector;
-    }    
+    } 
+    
+    public static float Angle(this Vector3 vector, Vector3 vector2)
+    {
+        return Vector3.Angle(vector, vector2);
+    }  
     
     public static float Distance(this Vector3 point1, Vector3 point2)
     {

@@ -105,7 +105,7 @@ public class GameMode : MonoBehaviour
         }
         
         TriggerNewPhase();
-        _sleepNPC.SetUIVisibilityState(false);
+        _sleepNPC.SetOnGameStateVisible(false);
     }
 
     public void Sleep()
@@ -117,7 +117,7 @@ public class GameMode : MonoBehaviour
             Build();
             
             Debug.Log("SLEEP");
-            _sleepNPC.SetUIVisibilityState(false);
+            _sleepNPC.SetOnGameStateVisible(false);
             _currentDayPhase = -1;
             TriggerNewPhase();
         }
@@ -146,11 +146,11 @@ public class GameMode : MonoBehaviour
         sunRef.transform.DORotate(phaseSunRotation[_currentDayPhase+1], sunTransitionTime);
         EndPhase();
         yield return new WaitForSeconds(3);
-        _sleepNPC.SetUIVisibilityState(true);
+        _sleepNPC.SetOnGameStateVisible(true);
         
         UnlockPhase();
         
-        _dismissNPC.SetUIVisibilityState(false);
+        _dismissNPC.SetOnGameStateVisible(false);
     }
 
     IEnumerator StartPhaseRoutine()
@@ -350,10 +350,10 @@ public class GameMode : MonoBehaviour
         _phaseUnlocked = false;
         foreach (var NPC in _activeNPCs)
         {
-            NPC.SetUIVisibilityState(false);
+            NPC.SetOnGameStateVisible(false);
         }
         
-        _dismissNPC.SetUIVisibilityState(false);
+        _dismissNPC.SetOnGameStateVisible(false);
     }
 
     void UnlockPhase()
@@ -362,10 +362,10 @@ public class GameMode : MonoBehaviour
         
         foreach (var NPC in _activeNPCs)
         {
-            NPC.SetUIVisibilityState(true);
+            NPC.SetOnGameStateVisible(true);
         }
         
-        _dismissNPC.SetUIVisibilityState(true);
+        _dismissNPC.SetOnGameStateVisible(true);
     }
 
     public void Dismiss()

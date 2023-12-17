@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
@@ -11,9 +12,13 @@ public class NPCBaseController : MonoBehaviour
     protected NPCCanvas _NPCCanvas;
     //public UnityEvent<EBuildingType, EDirection> OnRequestConstruction = new UnityEvent<EBuildingType, EDirection>();
     private PlayerController _playerController;
+    private bool _isOnPlayerVision;
     private bool _canShowUI;
-    private bool _wantShowUI = true;
-    
+    private bool _onPositionToShowUI = true;
+
+    private float _angleToPlayer;
+   
+
     protected virtual void Start()
     {
         //HideUI();
@@ -36,23 +41,14 @@ public class NPCBaseController : MonoBehaviour
             camForward.y = 0;
             UICanvas.transform.forward = camForward;
         }
+
+        _angleToPlayer = _playerController.MainCamera.transform.forward.Angle( transform.position - _playerController.transform.position);
     }
 
-    public void SetUIVisibilityState(bool newState)
-    {
-        _canShowUI = newState;
-        UpdateUIState();
-    }
-
-    public void SetUIVisibilityWish(bool newShow)
-    {
-        _wantShowUI = newShow;
-        UpdateUIState();
-    }
 
     void UpdateUIState()
     {
-        if (_canShowUI && _wantShowUI)
+        if (_canShowUI && _isOnPlayerVision && _onPositionToShowUI)
         {
             ShowUI();
         }
@@ -68,4 +64,23 @@ public class NPCBaseController : MonoBehaviour
     {
         UICanvas.gameObject.SetActive(false);
     }
+
+    private void OnDrawGizmos()
+    {
+        Handles.Label(transform.position, _angleToPlayer.ToString());
+    }
+
+    public void SetOnPlayerVision(bool state)
+    {
+        _isOnPlayerVision = state;
+        UpdateUIState();
+    }
+    
+    public void SetOnGameStateVisible(bool state)
+    {
+        _canShowUI = state;
+        UpdateUIState();
+    }
+    
+    
 }
