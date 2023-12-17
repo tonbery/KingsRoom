@@ -120,8 +120,6 @@ public class GameMode : MonoBehaviour
             _sleepNPC.SetUIVisibilityState(false);
             _currentDayPhase = -1;
             TriggerNewPhase();
-            
-            Debug.LogError("tem que calcular os recursos, etc");
         }
     }
 
@@ -223,11 +221,8 @@ public class GameMode : MonoBehaviour
     
     public void RequestConstruction(EBuildingType building, EDirection direction)
     {
-        print("REQUEST");
-
         if (!HaveResources(building))
         {
-            Debug.Log("Will not build");
             return;
         }
 

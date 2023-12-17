@@ -6,14 +6,18 @@ public class ListShuffleBag<T>
 {
     private List<T> _bag;
     private readonly List<T> _elements;
+    private bool _autoRefresh;
+    public int Count => _bag.Count;
 
-    public ListShuffleBag(List<T> PossibleElements)
+    public ListShuffleBag(List<T> PossibleElements, bool autoRefresh = true)
     {
+        _autoRefresh = autoRefresh;
         _elements = new List<T>(PossibleElements);
         CreateBag();
     }
-    public ListShuffleBag(T[] PossibleElements)
+    public ListShuffleBag(T[] PossibleElements, bool autoRefresh = true)
     {
+        _autoRefresh = autoRefresh;
         _elements = new List<T>(PossibleElements);
         CreateBag();
     }
@@ -24,7 +28,7 @@ public class ListShuffleBag<T>
         var pick = _bag[randomIndex];
         _bag.RemoveAt(randomIndex);
         
-        if(_bag.Count == 0) CreateBag();
+        if(_bag.Count == 0 && _autoRefresh) CreateBag();
 
         return pick;
     }
