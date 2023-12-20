@@ -1,8 +1,8 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using NaughtyAttributes;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
 
 public class Building : MonoBehaviour
@@ -14,6 +14,7 @@ public class Building : MonoBehaviour
 
     public List<Transform> Points => points;
 
+    #if UNITY_EDITOR
     [Button]
     private void GeneratePoints()
     {
@@ -55,6 +56,7 @@ public class Building : MonoBehaviour
         EditorUtility.SetDirty(this);
         
     }
+    #endif
 
     
     private void OnDrawGizmos()

@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0951f009e614aeb49aa3f5563dd24d8c, type: 3}
   m_Name: Wall
   m_EditorClassIdentifier: 
+  icon: {fileID: 21300000, guid: fabba8a2dfbc9b845b51a1bef89a2b01, type: 3}
+  prefab: {fileID: 2448854143861526845, guid: 84158505b009ef741a5a15a7a22c0463, type: 3}
   buildingType: 6
   buildingPrefab:
   - {fileID: 2193234756955246490, guid: 068482dd7011c7f449add5a55f3fdb96, type: 3}

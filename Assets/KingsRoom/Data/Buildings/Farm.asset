@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0951f009e614aeb49aa3f5563dd24d8c, type: 3}
   m_Name: Farm
   m_EditorClassIdentifier: 
+  icon: {fileID: 21300000, guid: e02b5d64a6e6a4f49a13586312767fc7, type: 3}
+  prefab: {fileID: 1797342396063906371, guid: edcb91b04bd291b4fb15c4a3ff6d6617, type: 3}
   buildingType: 1
   buildingPrefab:
   - {fileID: 2193234756955246490, guid: a99f0182b79c8864b9e11bb89ad24a4d, type: 3}

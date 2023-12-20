@@ -9,7 +9,7 @@ using Random = UnityEngine.Random;
 
 public class NPCRequesterController : NPCBaseController
 {
-    [SerializeField] private NPCData myData;
+    [SerializeField] private BuildingData myData;
     [SerializeField] private NavMeshAgent _agent;
 
     private EDirection _myChosenDirection;
@@ -20,7 +20,7 @@ public class NPCRequesterController : NPCBaseController
 
     private Vector3 _currentDestination;
     public EDirection MyChosenDirection => _myChosenDirection;
-    public NPCData MyData => myData;
+    public BuildingData MyData => myData;
     public NPCEndPoint EndPoint => _endPoint;
 
     protected override void Start()

@@ -17,6 +17,8 @@ public class BuildingManager : MonoBehaviour
     private Dictionary<EDirection, List<TileData>> _tilesByDirection = new Dictionary<EDirection, List<TileData>>();
     public List<TileData> Tiles => _tiles;
 
+    public BuildingData[] Data => buildingData;
+
     [SerializeField] private float debugCycle = 0.1f;
 
     private void Awake()

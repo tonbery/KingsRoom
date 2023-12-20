@@ -1,10 +1,9 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
+
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.Serialization;
+
 
 public class NPCBaseController : MonoBehaviour
 {
@@ -65,10 +64,12 @@ public class NPCBaseController : MonoBehaviour
         UICanvas.gameObject.SetActive(false);
     }
 
+    #if UNITY_EDITOR
     private void OnDrawGizmos()
     {
         Handles.Label(transform.position, _angleToPlayer.ToString());
     }
+    #endif
 
     public void SetOnPlayerVision(bool state)
     {

@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0951f009e614aeb49aa3f5563dd24d8c, type: 3}
   m_Name: Blacksmith
   m_EditorClassIdentifier: 
+  icon: {fileID: 21300000, guid: 567bd5c8b0edae64cb1572e3341de81d, type: 3}
+  prefab: {fileID: 6472327499058577096, guid: 5d753f3e0b46427489960cecbb1228be, type: 3}
   buildingType: 4
   buildingPrefab:
   - {fileID: 2193234756955246490, guid: 347cc2fad1e2e494a8391eb706f19749, type: 3}

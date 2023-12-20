@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0951f009e614aeb49aa3f5563dd24d8c, type: 3}
   m_Name: Market
   m_EditorClassIdentifier: 
+  icon: {fileID: 21300000, guid: 8da0a83bed675f94db8cbcef149bf345, type: 3}
+  prefab: {fileID: 373028882380253632, guid: d5c5b91b9b67f884db9323a20b1cd3d9, type: 3}
   buildingType: 3
   buildingPrefab:
   - {fileID: 2193234756955246490, guid: 068482dd7011c7f449add5a55f3fdb96, type: 3}

@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0951f009e614aeb49aa3f5563dd24d8c, type: 3}
   m_Name: Mine
   m_EditorClassIdentifier: 
+  icon: {fileID: 21300000, guid: 91cc8389cdae46743ae999a026ed2598, type: 3}
+  prefab: {fileID: 1723774354055514621, guid: f7877ff70f2a91e42824aac441b4b62e, type: 3}
   buildingType: 2
   buildingPrefab:
   - {fileID: 2193234756955246490, guid: 58768eb6b5cf03d4a93b29d37ae76329, type: 3}

@@ -1,3 +1,4 @@
+using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -11,6 +12,8 @@ public struct ResourceCost
 [CreateAssetMenu(menuName = "Kings/Building")]
 public class BuildingData : ScriptableObject
 {
+    [SerializeField, ShowAssetPreview] private Sprite icon;
+    [FormerlySerializedAs("prefab")] [SerializeField, ShowAssetPreview] private NPCRequesterController NPCPrefab;
     [SerializeField] private EBuildingType buildingType;
     [SerializeField] private GameObject[] buildingPrefab;
     [FormerlySerializedAs("cost")] [SerializeField] private ResourceCost[] buildingCost;
@@ -24,4 +27,8 @@ public class BuildingData : ScriptableObject
     public ResourceCost[] DailyCost => dailyCost;
     public ResourceCost[] BuildingReward => buildingReward;
     public ResourceCost[] DailyReward => dailyReward;
+
+    public Sprite Icon => icon;
+
+    public NPCRequesterController NpcPrefab => NPCPrefab;
 }

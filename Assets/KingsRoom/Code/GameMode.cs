@@ -51,8 +51,6 @@ public class GameMode : MonoBehaviour
     public static GameMode Instance => _gameMode;
     public PlayerController PlayerController => _playerController;
 
-    [SerializeField] private NPCData[] NPCDatas;
-    
     [SerializeField] private Transform[] NPCSpawnPoints;
     [SerializeField] private NPCEndPoint[] NPCEndPoints;
     [SerializeField] private Transform[] NPCExitPoints;
@@ -72,7 +70,7 @@ public class GameMode : MonoBehaviour
     [SerializeField] private NPCSleepController _sleepNPC;
     
 
-    private ListShuffleBag<NPCData> _NPCBag;
+    private ListShuffleBag<BuildingData> _NPCBag;
     private ListShuffleBag<Transform> _spawnPointsBag;
 
     //private ListShuffleBag<Transform> _endPointsBag;
@@ -95,7 +93,7 @@ public class GameMode : MonoBehaviour
     {
         _activeNPCs = new List<NPCRequesterController>();
         
-        _NPCBag = new ListShuffleBag<NPCData>(NPCDatas);
+        _NPCBag = new ListShuffleBag<BuildingData>(_buildingManager.Data);
         _spawnPointsBag = new ListShuffleBag<Transform>(NPCSpawnPoints);
         _exitPointsBag = new ListShuffleBag<Transform>(NPCExitPoints);
 
@@ -212,7 +210,7 @@ public class GameMode : MonoBehaviour
 
         var spawnPoint = _spawnPointsBag.Pick();
         var npcPick = _NPCBag.Pick();
-        var newNPC = Instantiate(npcPick.Prefab, spawnPoint.position, spawnPoint.rotation);
+        var newNPC = Instantiate(npcPick.NpcPrefab, spawnPoint.position, spawnPoint.rotation);
         newNPC.SetNPCPosition(NPCEndPoints[foundIndex]);
         NPCEndPoints[foundIndex].SetOccupant(newNPC);
 
