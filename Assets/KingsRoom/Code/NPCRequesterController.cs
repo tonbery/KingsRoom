@@ -33,7 +33,8 @@ public class NPCRequesterController : NPCBaseController
         {
             bool canBuild = GameMode.Instance.HaveResources(myData.BuildingType);
             string message = myData.BuildingType.ToString() + " at " + _myChosenDirection.ToString() + " cost 1 " + canBuild.ToString();
-            _NPCCanvas.SetText(message, canBuild);
+            _NPCCanvas.SetActionData(myData);
+            if (!canBuild) _NPCCanvas.HideButton();
         }
     }
 

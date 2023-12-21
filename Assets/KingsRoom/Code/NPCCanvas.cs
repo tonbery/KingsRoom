@@ -8,21 +8,25 @@ using UnityEngine.UI;
 
 public class NPCCanvas : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI questionText;
+    [SerializeField] private Image actionIcon;
+    [SerializeField] private CostDisplay costDisplay;
     [SerializeField] private Button buildButton;
     [SerializeField] private UIButtonCollider buttonCollider;
 
     public UnityEvent OnAccepted = new UnityEvent();
     private void Awake()
     {
-        //buildButton.onClick.AddListener(OnAccepted.Invoke);
         buttonCollider.pressEvent.AddListener(OnAccepted.Invoke);
     }
 
-    public void SetText(string message, bool visibleButton)
+    public void SetActionData(BuildingData building)
     {
-        questionText.text = message;
-        if (!visibleButton) Destroy(buildButton.gameObject);
-        
+        actionIcon.sprite = building.Icon;
+        costDisplay.SetCostDisplay(building);
+    }
+
+    public void HideButton()
+    {
+        buildButton.gameObject.SetActive(false);
     }
 }
