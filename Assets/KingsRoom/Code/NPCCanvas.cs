@@ -9,6 +9,8 @@ using UnityEngine.UI;
 public class NPCCanvas : MonoBehaviour
 {
     [SerializeField] private Image actionIcon;
+    [SerializeField] private Image directionImage;
+    [SerializeField] Sprite[] directionSprites;
     [SerializeField] private CostDisplay costDisplay;
     [SerializeField] private Button buildButton;
     [SerializeField] private UIButtonCollider buttonCollider;
@@ -19,10 +21,12 @@ public class NPCCanvas : MonoBehaviour
         buttonCollider.pressEvent.AddListener(OnAccepted.Invoke);
     }
 
-    public void SetActionData(BuildingData building)
+    public void SetActionData(BuildingData building, EDirection direction)
     {
         actionIcon.sprite = building.Icon;
         costDisplay.SetCostDisplay(building);
+        directionImage.gameObject.SetActive(true);
+        directionImage.sprite = directionSprites[(int)direction];
     }
 
     public void HideButton()
