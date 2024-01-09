@@ -977,7 +977,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "- Juntar NPCs com buildings\n- Display de pre\xE7o"
+  m_text: "- Juntar NPCs com buildings\n- Display de pre\xE7o\n- Botar dire\xE7\xE3o
+    no bal\xE3o de constu\xE7\xE3o"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2298,6 +2299,26 @@ PrefabInstance:
       propertyPath: m_text
       value: DISMISS!!!
       objectReference: {fileID: 0}
+    - target: {fileID: 6468901367577222114, guid: 601127ac37787f6479557f83487f04c9,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6468901367577222114, guid: 601127ac37787f6479557f83487f04c9,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6468901367577222114, guid: 601127ac37787f6479557f83487f04c9,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6468901367577222114, guid: 601127ac37787f6479557f83487f04c9,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6761764956168768070, guid: 601127ac37787f6479557f83487f04c9,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -2524,6 +2545,26 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8650624827323987830, guid: 601127ac37787f6479557f83487f04c9,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8851937637189529407, guid: 601127ac37787f6479557f83487f04c9,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8851937637189529407, guid: 601127ac37787f6479557f83487f04c9,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8851937637189529407, guid: 601127ac37787f6479557f83487f04c9,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8851937637189529407, guid: 601127ac37787f6479557f83487f04c9,
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
@@ -3521,8 +3562,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "- Botar dire\xE7\xE3o no bal\xE3o de constu\xE7\xE3o\n- Bal\xE3o bonitinho\n-
-    Eventos de noite\n- Zoom nas casinhas com info\n- Info nos pergaminhos/tutorial"
+  m_text: "- Eventos de noite\n- Zoom nas casinhas com info\n- Info nos pergaminhos/tutorial\n-
+    Bal\xE3o bonitinho"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3771,6 +3812,8 @@ MonoBehaviour:
   - {x: 286.564, y: 0, z: 0}
   sunRef: {fileID: 157207113}
   _buildingManager: {fileID: 1575515516}
+  nightEvents: []
+  nightEventChance: 0
   _dismissNPC: {fileID: 907351376}
   _sleepNPC: {fileID: 1224812069}
 --- !u!114 &1575515516
@@ -3785,7 +3828,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d663c95fdafc57e40971468d916f462d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minRadius: 40
+  startingBuildings: 9
+  minRadius: 60
   maxRadius: 120
   buildingData:
   - {fileID: 11400000, guid: 04d16c392f462434a9ccc152b2d325dc, type: 2}
@@ -4708,6 +4752,26 @@ PrefabInstance:
       propertyPath: m_text
       value: SLEEP!
       objectReference: {fileID: 0}
+    - target: {fileID: 6468901367577222114, guid: 9785bf339cb64f94f8f4987474e398ac,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6468901367577222114, guid: 9785bf339cb64f94f8f4987474e398ac,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6468901367577222114, guid: 9785bf339cb64f94f8f4987474e398ac,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6468901367577222114, guid: 9785bf339cb64f94f8f4987474e398ac,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6761764956168768070, guid: 9785bf339cb64f94f8f4987474e398ac,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -4918,6 +4982,26 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8851937637189529407, guid: 9785bf339cb64f94f8f4987474e398ac,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8851937637189529407, guid: 9785bf339cb64f94f8f4987474e398ac,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8851937637189529407, guid: 9785bf339cb64f94f8f4987474e398ac,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8851937637189529407, guid: 9785bf339cb64f94f8f4987474e398ac,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9173762831881469361, guid: 9785bf339cb64f94f8f4987474e398ac,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -5020,12 +5104,12 @@ PrefabInstance:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 490197886}
   - {fileID: 157207114}
   - {fileID: 432432461}
   - {fileID: 2013410475}
   - {fileID: 6445681165328594388}
   - {fileID: 1157178251}
-  - {fileID: 490197886}
   - {fileID: 5398787541498548650}
   - {fileID: 907351375}
   - {fileID: 1039268763}

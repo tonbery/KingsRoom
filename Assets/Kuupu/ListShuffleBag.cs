@@ -8,6 +8,7 @@ public class ListShuffleBag<T>
     private readonly List<T> _elements;
     private bool _autoRefresh;
     public int Count => _bag.Count;
+    public int ElementsCount => _elements.Count;
 
     public ListShuffleBag(List<T> PossibleElements, bool autoRefresh = true)
     {

@@ -1,13 +1,18 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class BuildingManager : MonoBehaviour
 {
+    
+    [SerializeField] int startingBuildings = 9;
     [SerializeField] private float minRadius;
     [SerializeField] private float maxRadius;
+    [SerializeField, Range(0,1)] float buildNearChance = 0.25f;
+    [SerializeField] float distanceVariation = 10f;
     [SerializeField] private BuildingData[] buildingData;
     private Dictionary<EBuildingType, BuildingData> _buildingDataByType = new Dictionary<EBuildingType, BuildingData>();
     [SerializeField] private LayerMask buildingsMask;
@@ -31,6 +36,16 @@ public class BuildingManager : MonoBehaviour
         _maxBuiltRadius = minRadius;
 
         //StartCoroutine(TestBuildRoutine());
+    }
+
+
+    private void Start() 
+    {
+        for (int i = 0; i < startingBuildings; i++)
+        {
+           BuildRequest request = new BuildRequest((EBuildingType)Random.Range(0, (int)EBuildingType.NUM), (EDirection)Mathf.Repeat(i, (int)EDirection.NUM)); 
+           Build(request);
+        }
     }
 
     IEnumerator TestBuildRoutine()
@@ -58,7 +73,7 @@ public class BuildingManager : MonoBehaviour
         
         var buildPosition = Vector3.forward.Rotate(angle, Vector3.up).normalized;
 
-        bool buildNear = Random.Range(0f, 1f) > 0.25f;
+        bool buildNear = Random.Range(0f, 1f) > buildNearChance;
 
         bool alreadyBuilt = false;
 
@@ -82,7 +97,7 @@ public class BuildingManager : MonoBehaviour
 
         if (!alreadyBuilt)
         {
-            var distance = Mathf.Clamp(Random.Range(minRadius, _maxBuiltRadius + Random.Range(0f, maxRadius*0.2f)), minRadius, maxRadius);
+            var distance = Mathf.Clamp(Random.Range(minRadius, _maxBuiltRadius + Random.Range(0f, distanceVariation)), minRadius, maxRadius);
             if (_maxBuiltRadius < distance) _maxBuiltRadius = distance;
             buildPosition *= distance;
             Debug.DrawRay(buildPosition, Vector3.up * 100, Color.green, 999999);

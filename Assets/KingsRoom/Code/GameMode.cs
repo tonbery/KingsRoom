@@ -58,9 +58,13 @@ public class GameMode : MonoBehaviour
     [SerializeField] private Vector3[] phaseSunRotation;
     [SerializeField] private Light sunRef;
     [SerializeField] private BuildingManager _buildingManager;
+    [SerializeField] private NightEventData[] nightEvents;
+    [SerializeField, Range(0f,1f)] private float nightEventChance;
+
 
     private List<BuildRequest> _buildingOfTheDay = new List<BuildRequest>();
         
+    int _currentDay;
     private int _currentDayPhase = -1;
 
     private Dictionary<EResourceType, int> Resources = new Dictionary<EResourceType, int>();
@@ -69,14 +73,11 @@ public class GameMode : MonoBehaviour
     [SerializeField] private NPCDismissController _dismissNPC;
     [SerializeField] private NPCSleepController _sleepNPC;
     
-
+    private ListShuffleBag<NightEventData> _nightEventsBag;
     private ListShuffleBag<BuildingData> _NPCBag;
     private ListShuffleBag<Transform> _spawnPointsBag;
-
-    //private ListShuffleBag<Transform> _endPointsBag;
-    private ListShuffleBag<Transform> _exitPointsBag;
-
-    //private Dictionary<EBuildingType, BuildingData> _buildingDataByType = new Dictionary<EBuildingType, BuildingData>();
+    
+    private ListShuffleBag<Transform> _exitPointsBag;    
 
     private PlayerController _playerController;
 
@@ -93,6 +94,7 @@ public class GameMode : MonoBehaviour
     {
         _activeNPCs = new List<NPCRequesterController>();
         
+        _nightEventsBag = new ListShuffleBag<NightEventData>(new List<NightEventData>(nightEvents));
         _NPCBag = new ListShuffleBag<BuildingData>(_buildingManager.Data);
         _spawnPointsBag = new ListShuffleBag<Transform>(NPCSpawnPoints);
         _exitPointsBag = new ListShuffleBag<Transform>(NPCExitPoints);
@@ -113,11 +115,32 @@ public class GameMode : MonoBehaviour
             ProcessResources();
             
             Build();
+
+            TriggerNightEvent();
+
+            _currentDay++;
             
             Debug.Log("SLEEP");
             _sleepNPC.SetOnGameStateVisible(false);
             _currentDayPhase = -1;
             TriggerNewPhase();
+        }
+    }
+
+    private void TriggerNightEvent()
+    {
+        if(_nightEventsBag.ElementsCount <= 0) return;
+
+        while(_nightEventsBag.Count > 1)
+        {
+            var nightEvent = _nightEventsBag.Pick();
+            if(_currentDay < nightEvent.StartDay) continue;
+
+            var eventDirection = (EDirection) Random.Range(0,(int)EDirection.NUM);
+
+            Debug.Log("descontar defesa só de um lado da cidade");
+
+            break;            
         }
     }
 
