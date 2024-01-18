@@ -51,6 +51,8 @@ public class GameMode : MonoBehaviour
     public static GameMode Instance => _gameMode;
     public PlayerController PlayerController => _playerController;
 
+    public BuildingManager BuildingManager => _buildingManager;
+
     [SerializeField] private Transform[] NPCSpawnPoints;
     [SerializeField] private NPCEndPoint[] NPCEndPoints;
     [SerializeField] private Transform[] NPCExitPoints;
@@ -67,7 +69,7 @@ public class GameMode : MonoBehaviour
     int _currentDay;
     private int _currentDayPhase = -1;
 
-    private Dictionary<EResourceType, int> Resources = new Dictionary<EResourceType, int>();
+    //private Dictionary<EResourceType, int> Resources = new Dictionary<EResourceType, int>();
 
     private List<NPCRequesterController> _activeNPCs;
     [SerializeField] private NPCDismissController _dismissNPC;
@@ -99,10 +101,7 @@ public class GameMode : MonoBehaviour
         _spawnPointsBag = new ListShuffleBag<Transform>(NPCSpawnPoints);
         _exitPointsBag = new ListShuffleBag<Transform>(NPCExitPoints);
 
-        for (int i = 0; i < (int)EResourceType.NUM; i++)
-        {
-            Resources.Add((EResourceType)i, 10);
-        }
+       
         
         TriggerNewPhase();
         _sleepNPC.SetOnGameStateVisible(false);
@@ -241,13 +240,13 @@ public class GameMode : MonoBehaviour
     }
     
     public void RequestConstruction(EBuildingType building, EDirection direction)
-    {
-        if (!HaveResources(building))
+    {        
+        if (!_buildingManager.HaveResources(building, direction))
         {
             return;
         }
-
-        SpendBuildingResources(building);
+        
+        _buildingManager.SpendBuildingResources(building, direction);        
         
         _buildingOfTheDay.Add(new BuildRequest(building, direction));
 
@@ -261,17 +260,9 @@ public class GameMode : MonoBehaviour
 
     void ProcessResources()
     {
-        foreach (var tile in _buildingManager.Tiles)
+        foreach (var direction in _buildingManager.TilesByDirection)
         {
-            if (tile.BuildingData.DailyCost.Length == 0 || HaveResources(tile.BuildingData.DailyCost))
-            {
-                SpendResources(tile.BuildingData.DailyCost);
-                
-                foreach (var reward in tile.BuildingData.DailyReward)
-                {
-                    Resources[reward.ResourceType] += reward.Value;
-                }
-            }
+            direction.Value.ProcessResources();            
         }
     }
     
@@ -279,12 +270,7 @@ public class GameMode : MonoBehaviour
     {
         foreach (var buildingRequest in _buildingOfTheDay)
         {
-            var newTile = _buildingManager.Build(buildingRequest);
-
-            foreach (var reward in newTile.BuildingData.BuildingReward)
-            {
-                Resources[reward.ResourceType] +=  reward.Value;
-            }
+            _buildingManager.Build(buildingRequest);            
         }
         
         _buildingOfTheDay.Clear();
@@ -294,76 +280,24 @@ public class GameMode : MonoBehaviour
     {
         return _exitPointsBag.Pick();
     }
-    
-    public bool HaveResources(EBuildingType buildingType)
-    {
-        var building = _buildingManager.GetBuildDataByType(buildingType);
-        return HaveResources(building);
-    }
-    
-    public void SpendBuildingResources(EBuildingType buildingType)
-    {
-        var building = _buildingManager.GetBuildDataByType(buildingType);
-        foreach (var cost in building.BuildingCost)
-        {
-            Resources[cost.ResourceType] -= cost.Value;
-        }
-    }
-    
-    public void SpendResources(ResourceCost[] costs)
-    {
-        foreach (var cost in costs)
-        {
-            Resources[cost.ResourceType] -= cost.Value;
-        }
-    }
-    
-    public bool HaveResources(BuildingData building)
-    {
-        foreach (var cost in building.BuildingCost)
-        {
-            if (Resources[cost.ResourceType] < cost.Value) return false;
-        }
-
-        return true;
-    }
-    
-    public bool HaveResources(List<ResourceCost> costs)
-    {
-        foreach (var cost in costs)
-        {
-            if (Resources[cost.ResourceType] < cost.Value) return false;
-        }
-
-        return true;
-    }
-    
-    public bool HaveResources(ResourceCost[] costs)
-    {
-        foreach (var cost in costs)
-        {
-            if (Resources[cost.ResourceType] < cost.Value) return false;
-        }
-
-        return true;
-    }
+     
 
     private void OnGUI()
     {
-        GUILayout.BeginVertical();
-        foreach (var resource in Resources)
-        {
-            GUILayout.BeginHorizontal();
-            GUILayout.Box(resource.Key.ToString());
-            GUILayout.Box(resource.Value.ToString());
-            if (GUILayout.Button("+"))
-            {
-                Resources[resource.Key] += 5;
-                break;
-            }
-            GUILayout.EndHorizontal();
-        }
-        GUILayout.EndVertical();
+        // GUILayout.BeginVertical();
+        // foreach (var resource in Resources)
+        // {
+        //     GUILayout.BeginHorizontal();
+        //     GUILayout.Box(resource.Key.ToString());
+        //     GUILayout.Box(resource.Value.ToString());
+        //     if (GUILayout.Button("+"))
+        //     {
+        //         Resources[resource.Key] += 5;
+        //         break;
+        //     }
+        //     GUILayout.EndHorizontal();
+        // }
+        // GUILayout.EndVertical();
     }
 
     void LockPhase()

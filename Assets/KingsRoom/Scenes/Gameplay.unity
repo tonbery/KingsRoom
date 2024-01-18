@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 268.30826, g: 207.92484, b: 135.43874, a: 1}
+  m_IndirectSpecularColor: {r: 269.37637, g: 208.64493, b: 135.70094, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -519,13 +519,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 157207112}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: 0.1865726, z: -0, w: 0.98244125}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 21.506, z: 0}
 --- !u!114 &157207115
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3806,10 +3806,10 @@ MonoBehaviour:
   - {fileID: 1105527125}
   dayPhases: 3
   phaseSunRotation:
-  - {x: 21.469, y: 0, z: 0}
-  - {x: 113.283, y: 0, z: 0}
-  - {x: 172.406, y: 0, z: 0}
-  - {x: 286.564, y: 0, z: 0}
+  - {x: 21.469, y: 21.506, z: 0}
+  - {x: 113.283, y: 21.506, z: 0}
+  - {x: 172.406, y: 21.506, z: 0}
+  - {x: 286.564, y: 21.506, z: 0}
   sunRef: {fileID: 157207113}
   _buildingManager: {fileID: 1575515516}
   nightEvents: []
@@ -3831,6 +3831,8 @@ MonoBehaviour:
   startingBuildings: 9
   minRadius: 60
   maxRadius: 120
+  buildNearChance: 0.25
+  distanceVariation: 10
   buildingData:
   - {fileID: 11400000, guid: 04d16c392f462434a9ccc152b2d325dc, type: 2}
   - {fileID: 11400000, guid: 2828fc6b0c0c17649b817f76045b282d, type: 2}
@@ -5038,7 +5040,7 @@ PrefabInstance:
     - target: {fileID: 7153472919950974097, guid: 781ee57203bba8347b608d973571e77e,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.24
+      value: -9.37
       objectReference: {fileID: 0}
     - target: {fileID: 7153472919950974097, guid: 781ee57203bba8347b608d973571e77e,
         type: 3}
@@ -5048,27 +5050,27 @@ PrefabInstance:
     - target: {fileID: 7153472919950974097, guid: 781ee57203bba8347b608d973571e77e,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 11.8
+      value: -0.3
       objectReference: {fileID: 0}
     - target: {fileID: 7153472919950974097, guid: 781ee57203bba8347b608d973571e77e,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.9999357
+      value: -0.69903934
       objectReference: {fileID: 0}
     - target: {fileID: 7153472919950974097, guid: 781ee57203bba8347b608d973571e77e,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7153472919950974097, guid: 781ee57203bba8347b608d973571e77e,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.011344416
+      value: -0.7150833
       objectReference: {fileID: 0}
     - target: {fileID: 7153472919950974097, guid: 781ee57203bba8347b608d973571e77e,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7153472919950974097, guid: 781ee57203bba8347b608d973571e77e,
         type: 3}
@@ -5078,7 +5080,7 @@ PrefabInstance:
     - target: {fileID: 7153472919950974097, guid: 781ee57203bba8347b608d973571e77e,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 1.3
+      value: -268.7
       objectReference: {fileID: 0}
     - target: {fileID: 7153472919950974097, guid: 781ee57203bba8347b608d973571e77e,
         type: 3}
@@ -5104,9 +5106,9 @@ PrefabInstance:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 490197886}
-  - {fileID: 157207114}
   - {fileID: 432432461}
+  - {fileID: 157207114}
+  - {fileID: 490197886}
   - {fileID: 2013410475}
   - {fileID: 6445681165328594388}
   - {fileID: 1157178251}
